@@ -45,4 +45,6 @@ From gridworlds to real robots: how an agent learns to act, by trial and error a
 - Part 1: From bandits to gridworlds
   - [Tutorial overview](Module%203/part1_sequential_decisions/README.md)
   - Tutorial: [notebook](Module%203/part1_sequential_decisions/tutorial_3a.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/bambschool/BAMB2026/blob/main/Module%203/part1_sequential_decisions/tutorial_3a.ipynb)
-- Part 2: Imitation learning on a real robot, *coming soon*
+- Part 2: Imitation learning on a real robot
+  - [Tutorial overview](Module%203/part2_imitation_learning/README.md)
+  - Tutorial: [notebook](Module%203/part2_imitation_learning/tutorial_3b.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/bambschool/BAMB2026/blob/main/Module%203/part2_imitation_learning/tutorial_3b.ipynb)

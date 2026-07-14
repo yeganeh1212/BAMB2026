@@ -6,7 +6,10 @@ Welcome to the BAMB! 2026 tutorial for Module 3. The question behind this module
    - Intro to structuring your agents and environments properly by following [gym API standards](https://github.com/Farama-Foundation/Gymnasium?tab=readme-ov-file#api)
    - Intro to RL algorithms in their simplest, tabular form
    - Extending them to classic control environments such as [CartPole](https://gymnasium.farama.org/environments/classic_control/cart_pole/)
-2. Imitation learning on a real robot: learning to act by *copying someone who already knows how*. *Coming soon.*
+2. [Imitation learning on a real robot](./part2_imitation_learning/): learning to act by *copying someone who already knows how*.
+   - Why animals, ourselves included, mostly do not learn the way our Q-learning agent does
+   - Real demonstration data from an [SO-101 robot arm](https://huggingface.co/docs/lerobot/so101), recorded with [LeRobot](https://huggingface.co/docs/lerobot)
+   - Behavioural cloning: fitting a policy to demonstrations, which turns out to be maximum-likelihood model fitting in disguise
 
 In Module 2, you fit RL models to behaviour on tasks where a single choice was followed immediately by a reward. Part 1 picks up exactly there and adds everything those tasks leave out: states, transitions, and rewards that only arrive long after the action that earned them. Part 2 then takes the reward away altogether, which is closer to how you learned most of what you know.
 
@@ -45,12 +48,22 @@ You don't actually need to activate the environment: prefix any command with `uv
 
 ## Usage
 
-To work through the tutorial notebook, launch it with:
+To work through the tutorial notebook for part 1, launch it with:
 
 ```sh
 # from the "Module 3/" folder
 uv run jupyter lab part1_sequential_decisions/tutorial_3a.ipynb
 ```
+
+Part 2 needs one extra step. It depends on [LeRobot](https://huggingface.co/docs/lerobot), which drags in torch, OpenCV and a video stack, roughly a gigabyte of it, and there is no reason to make everybody install all that just to run part 1. So it sits in an optional dependency group that `uv sync` leaves out by default. Ask for it explicitly:
+
+```sh
+# from the "Module 3/" folder
+uv sync --group robot
+uv run jupyter lab part2_imitation_learning/tutorial_3b.ipynb
+```
+
+We recommend Colab for part 2 regardless, since nothing in it needs a GPU and the notebook installs what it needs by itself.
 
 If you prefer VSCode, just open the notebook and select the `.venv` interpreter in the top-right kernel picker.
 

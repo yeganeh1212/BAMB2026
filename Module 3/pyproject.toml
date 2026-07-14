@@ -4,7 +4,8 @@ version = "0.1.0"
 description = "BAMB! 2026, Module 3: Learning to act"
 authors = [{ name = "nisheetpatel", email = "nisheet.pat@gmail.com" }]
 readme = "README.md"
-requires-python = ">=3.10"
+# 3.12 is what lerobot (part 2) requires, and what .python-version pins anyway
+requires-python = ">=3.12"
 dependencies = [
     "numpy>=2.0.0",
     "scipy>=1.14.0",
@@ -22,6 +23,16 @@ dev = [
     "ruff>=0.5.1",
     "pytest>=8.2.2",
     "jupyterlab>=4.2.3",
+]
+# Part 2 only, and deliberately not installed by default: lerobot brings torch, OpenCV,
+# rerun and a video stack with it, which is about a gigabyte that nobody doing part 1 needs.
+# Get it with `uv sync --group robot`.
+#
+# The version is pinned, not a range, so that every laptop behaves the same. Note that
+# lerobot 0.5.2 exists only in the git repository and was never published to PyPI, so it
+# cannot be pinned: the releases go 0.5.0, 0.5.1, then 0.6.0.
+robot = [
+    "lerobot==0.5.1",
 ]
 
 [build-system]
