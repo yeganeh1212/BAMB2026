@@ -10,8 +10,11 @@ Welcome to the BAMB! 2026 tutorial for Module 3. The question behind this module
    - Why animals, ourselves included, mostly do not learn the way our Q-learning agent does
    - Real demonstration data from an [SO-101 robot arm](https://huggingface.co/docs/lerobot/so101), recorded with [LeRobot](https://huggingface.co/docs/lerobot)
    - Behavioural cloning: fitting a policy to demonstrations, which turns out to be maximum-likelihood model fitting in disguise
+   - And a policy trained exactly that way, driving the real arm at the front of the room
 
 In Module 2, you fit RL models to behaviour on tasks where a single choice was followed immediately by a reward. Part 1 picks up exactly there and adds everything those tasks leave out: states, transitions, and rewards that only arrive long after the action that earned them. Part 2 then takes the reward away altogether, which is closer to how you learned most of what you know.
+
+The mini-project for this module is described in [mini_projects.md](./mini_projects.md). There is one, everybody does it, and the best few policies in the class get deployed on the real arm on the last day.
 
 ## Installation
 

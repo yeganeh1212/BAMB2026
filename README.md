@@ -48,3 +48,7 @@ From gridworlds to real robots: how an agent learns to act, by trial and error a
 - Part 2: Imitation learning on a real robot
   - [Tutorial overview](Module%203/part2_imitation_learning/README.md)
   - Tutorial: [notebook](Module%203/part2_imitation_learning/tutorial_3b.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/bambschool/BAMB2026/blob/main/Module%203/part2_imitation_learning/tutorial_3b.ipynb)
+
+### Mini-projects
+
+- [Project guide and datasets](Module%203/mini_projects.md)

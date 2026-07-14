@@ -4,13 +4,13 @@ Welcome to the second part of Module 3. In part 1, our agent learned to act by t
 
 So in this part we take the reward away. Instead, a human demonstrates the task, and we fit a policy to the demonstrated behaviour. This is **imitation learning**, and its simplest form, **behavioural cloning**, turns out to be something you already know how to do: it is maximum-likelihood model fitting on behavioural data, exactly as in Module 2, except that the participant is a robot and the choice is a six-dimensional continuous action.
 
-You will be working with [`tutorial_3b.ipynb`](./tutorial_3b.ipynb), the jupyter notebook with all instructions and code. In it you will meet the arm, look at real demonstration data, fit your first (deliberately flawed) policy to it, and see exactly how it fails.
+You will be working with [`tutorial_3b.ipynb`](./tutorial_3b.ipynb), the jupyter notebook with all instructions and code. It is short and simple: look at real demonstration data, fit a policy to it on your laptop, and then watch a policy trained exactly that way drive the real arm at the front of the room.
 
-The mini-projects that follow from this tutorial are described in [`mini_projects.md`](../mini_projects.md).
+The [mini-project](../mini_projects.md) picks up from there: train a policy good enough that we would trust it on the arm, and the best few in the class get deployed on the last day.
 
 ## What you need
 
-Nothing but a laptop and a browser. The demonstration data is streamed from the [Hugging Face Hub](https://huggingface.co/datasets/lerobot/svla_so101_pickplace), everything trains on CPU in a couple of minutes, and the robot arm itself only ever appears in the live demos at the front of the room. You do not need hardware to do this tutorial, or to do any of the mini-projects.
+Nothing but a laptop and a browser. The demonstration data streams from the [Hugging Face Hub](https://huggingface.co/datasets/lerobot/svla_so101_pickplace), everything in the tutorial trains on CPU in a couple of minutes, and the arm itself only ever appears at the front of the room. You do not need hardware to do the tutorial or the mini-project; if your policy is picked for deployment, we run it on the arm for you.
 
 ## The SO-101
 
@@ -60,11 +60,22 @@ The notebook passes `video_backend="pyav"` when it loads the dataset, and that i
 
 ## For instructors
 
-The tutorial needs exactly three things: an assembled and calibrated SO-101 pair with a webcam on the demo laptop, wifi for the students, and one pinned LeRobot version announced to everybody. Test the arm the day before, not on the morning.
+On the day, the tutorial needs three things: an assembled and calibrated SO-101 pair with a webcam on the demo laptop, wifi for the students, and one pinned LeRobot version announced to everybody. Test the arm the day before, not on the morning.
 
-Three commands are worth having in your fingers, all documented in the [LeRobot walkthrough](https://huggingface.co/docs/lerobot/il_robots): `lerobot-teleoperate` for the live demo, `lerobot-record` if you want to record a dataset with the room, and `lerobot-replay` to play a recorded episode back through the arm.
+Four commands are worth having in your fingers, all documented in the [LeRobot walkthrough](https://huggingface.co/docs/lerobot/il_robots): `lerobot-teleoperate`, `lerobot-record` (which both records demonstrations and, with `--policy.path`, runs a trained policy), `lerobot-train`, and `lerobot-replay`.
 
-Two things reliably go wrong:
+### Prepare this before the school
+
+The finale of the session (Section 5) is a policy we trained by imitation learning, driving the arm by itself. That takes two jobs, both done in advance:
+
+1. **Record ~50 pick-and-place episodes on our arm** with `lerobot-record`, and push them to the Hub. About an hour of teleoperation. This dataset does double duty: it trains the demo policy, and it is what the mini-project groups train on. They must not use the public dataset for their final policy — a policy fit to somebody else's table cannot work on ours, however good its score.
+2. **Train ACT on it** with `lerobot-train` on a free Colab GPU (a few hours, unattended), and check it does the task. Then deploy it in the session with `lerobot-record --policy.path=...`.
+
+**Tape the camera down, and mark the cube's start positions on the table.** If the camera pose shifts between recording and any later deployment, every vision policy dies at once and nobody will be able to work out why. This is the single most likely thing to ruin the demo.
+
+**Fallback**, if the trained policy is not ready or misbehaves on the day: teleoperate live, then `lerobot-replay` a recorded episode. Less spectacular, still makes the point. Replaying an episode from the *public* dataset is a nice bonus lesson in its own right — the arm reproduces the motion perfectly and grasps thin air, because their cube was somewhere else.
+
+Two more things reliably go wrong:
 
 - **The USB ports.** Linux hands out `/dev/ttyACM0` and `/dev/ttyACM1` in the order the devices happen to enumerate, so which one is the leader and which is the follower can change between reboots and will certainly differ on somebody else's laptop. Do not trust the numbering, and do not hardcode it: check every time, or use the stable `/dev/serial/by-id/` paths. On macOS the ports are `/dev/tty.usbmodem*` instead.
 - **Calibration.** Calibration lives in a file per arm, keyed by the id you pass. If you run a command with an id that has never been calibrated, LeRobot will cheerfully start a full recalibration in front of the room. Calibrate both arms once, under the `bamb_leader` and `bamb_follower` ids that the notebook uses, and keep those files.
